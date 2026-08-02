@@ -955,6 +955,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: -7, y: -3, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: -4, y: -2, z: 0}
     second:
       serializedVersion: 2
@@ -1037,8 +1047,8 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 1a49b16bd82f4d142a3394144c76d78d, type: 2}
   - m_RefCount: 22
     m_Data: {fileID: 11400000, guid: 4952468c09758ab43a8240f4f7dc2113, type: 2}
   - m_RefCount: 6
@@ -1048,8 +1058,8 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 9f650f6fc0b524a409e3fb707b62404b, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -584849841884082677, guid: 2642ed81300642a4097132e2906b8ae5, type: 3}
   - m_RefCount: 22
     m_Data: {fileID: 125840615, guid: 2642ed81300642a4097132e2906b8ae5, type: 3}
   - m_RefCount: 6
@@ -1059,7 +1069,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: -6237726702096559954, guid: 2642ed81300642a4097132e2906b8ae5, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 30
+  - m_RefCount: 31
     m_Data:
       e00: 1
       e01: 0
@@ -1078,7 +1088,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 30
+  - m_RefCount: 31
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -1188,6 +1198,14 @@ CompositeCollider2D:
         Y: -15666667
       - X: 30333334
         Y: -15666667
+    - - X: -59666668
+        Y: -19666666
+      - X: -70333336
+        Y: -19666666
+      - X: -70333336
+        Y: -30333334
+      - X: -59666668
+        Y: -30333334
     - - X: 110333336
         Y: -47666668
       - X: -110333336
@@ -1206,6 +1224,10 @@ CompositeCollider2D:
       - {x: -4.0333333, y: -0.9666959}
       - {x: -4.0333114, y: -1.4333382}
       - {x: -3.4333305, y: -1.5666667}
+    - - {x: -5.9666963, y: -3.0333335}
+      - {x: -5.9666963, y: -1.9666666}
+      - {x: -7.033334, y: -1.966696}
+      - {x: -7.033304, y: -3.0333335}
     - - {x: 11.033304, y: -5.0333333}
       - {x: 11.033304, y: -4.766667}
       - {x: -11.033334, y: -4.766696}
@@ -1288,6 +1310,10 @@ MonoBehaviour:
   rb: {fileID: 335590800}
   moveSpeed: 5
   jumpPower: 8
+  maxJumps: 2
+  baseGravity: 2
+  maxFallSpeed: 18
+  fallSpeedMultiplier: 1.2
   groundCheckPos: {fileID: 110180268}
   groundcheckSize: {x: 0.6, y: 0.06}
   groundLayer:

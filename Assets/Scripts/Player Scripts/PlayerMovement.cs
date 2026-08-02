@@ -14,6 +14,25 @@ public class PlayerMovement : MonoBehaviour
     public int maxJumps = 2;
     private int jumpsRemaining;
 
+    [Header("Gravity")]
+    public float baseGravity = 2;
+    public float maxFallSpeed = 18f;
+    public float fallSpeedMultiplier = 1.5f;
+
+    //custom gravity for better experience
+    private void DoGravity()
+    {
+        if (rb.linearVelocity.y < 0) //check if Y velocity is negative (means we are falling)
+        {
+            rb.gravityScale = baseGravity * fallSpeedMultiplier; //makes player fall faster to prevent floaty feel
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -maxFallSpeed)); //cap negative.y velocity (fall speed) to prevent smashing the floor
+        }
+        else
+        {
+            rb.gravityScale = baseGravity; // if not falling return to baseGravity
+        }
+    }
+
     [Header("GroundCheck")]
     public Transform groundCheckPos; //position on player where groundcheck starts (edited on player prefab)
     public Vector2 groundcheckSize = new Vector2(0.5f, 0.05f); //the size of debug cube to see it lol
@@ -44,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
+        DoGravity();
     }
 
     public void Move(InputAction.CallbackContext context)
