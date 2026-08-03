@@ -6,8 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public Rigidbody2D rb;
-    bool isFacingRight = true; // true because by default character always looks to the right.
-    public Animator animator;
+    bool isFacingRight = true; // true - player faces right, false - left.
+    public Animator animator; // for animator component
     public ParticleSystem TrailParticles; //trail when player jumps
 
     [Header("Movement")]
@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jumping")]
     public float jumpPower = 8f;
     public int maxJumps = 2;
-    private int jumpsRemaining;
+    private int jumpsLeft;
 
     [Header("Gravity")]
     public float baseGravity = 2;
@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        FlipPlayerSkin(); //when starting player always faces right (if default of "isFacingRight" is true
+        FlipPlayer(); //when starting player always faces right (if default of "isFacingRight" is true
     }
 
     void Update()
@@ -66,11 +66,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        FlipPlayerSkin(); //when applying movement (left or right) make player face that direction...
+        FlipPlayer(); //when applying movement (left or right) make player face that direction...
         horizontalMovement = context.ReadValue<Vector2>().x; //movement on horizontal(x) axis
     }
 
-    private void FlipPlayerSkin() //make player face direction of movement
+    private void FlipPlayer() //make player face direction of movement
     {
         if (isFacingRight && horizontalMovement < 0 || !isFacingRight && horizontalMovement > 0)
         {
@@ -92,20 +92,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (CheckGrounded())
         {
-            jumpsRemaining = maxJumps; //fill up double jump when on ground
+            jumpsLeft = maxJumps; //fill up double jump when on ground
         }
 
-        if (jumpsRemaining != 0 && CheckIsWalled() && currentWallDir != 0 && currentWallDir != lastWallDir)
+        if (jumpsLeft != 0 && CheckWalled() && currentWallDir != 0 && currentWallDir != lastWallDir)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             lastWallDir = currentWallDir;
             JumpTrail();
         }
 
-        else if (jumpsRemaining > 0 && !CheckIsWalled()) //double jump
+        else if (jumpsLeft > 0 && !CheckWalled()) //double jump
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
-            jumpsRemaining--;
+            jumpsLeft--;
             lastWallDir = currentWallDir;
             JumpTrail();
         }
@@ -123,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private bool CheckIsWalled()
+    private bool CheckWalled()
     {
         return Physics2D.OverlapBox(wallCheckPos.position, wallCheckSize, 0, wallLayer);
         
@@ -144,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void DoWallSlide()
     {
-        if (!CheckGrounded() && CheckIsWalled())
+        if (!CheckGrounded() && CheckWalled())
         {
             currentWallDir = transform.localScale.x; //while on the wall, get if it's on left or right from player
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -wallSlideSpeed));
