@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Rigidbody2D rb;
     bool isFacingRight = true; // true because by default character always looks to the right.
+    public Animator animator;
+    public ParticleSystem TrailParticles; //trail when player jumps
 
     [Header("Movement")]
     public float moveSpeed = 5f;
@@ -74,8 +76,13 @@ public class PlayerMovement : MonoBehaviour
         {
             isFacingRight = !isFacingRight;
             Vector3 ls = transform.localScale;
-            ls.x *= -1f; //make character face the other way (in transform scale x becomes -1 or 1)
+            ls.x *= -1f; //make character face the other way (in transform, scale x becomes -1 or 1)
             transform.localScale = ls;
+        }
+
+        if(rb.linearVelocity.y == 0)
+        {
+            JumpTrail(); //play trail particles when changing directions but not when falling
         }
     }
 
@@ -92,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             lastWallDir = currentWallDir;
+            JumpTrail();
         }
 
         else if (jumpsRemaining > 0 && !CheckIsWalled()) //double jump
@@ -99,7 +107,14 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             jumpsRemaining--;
             lastWallDir = currentWallDir;
+            JumpTrail();
         }
+    }
+
+    private void JumpTrail()
+    {
+        animator.SetTrigger("jump");
+        TrailParticles.Play();
     }
 
     private bool CheckGrounded() 
