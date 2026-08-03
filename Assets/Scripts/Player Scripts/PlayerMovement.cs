@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.red; //cube will be red
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
-        Gizmos.color = Color.yellow; //cube will be red
+        Gizmos.color = Color.yellow; 
         Gizmos.DrawWireCube(wallCheckPos.position, wallCheckSize);
     }
 
@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
-        CheckGrounded();
+       
         DoGravity();
         DoWallSlide();
         Debug.Log($"Current: {currentWallDir}, Last: {lastWallDir}");
@@ -78,34 +78,23 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = ls;
         }
     }
+
     public void Jump(InputAction.CallbackContext context)
     {
         if (!context.performed) return; //lets method run only when pressed first, otherwise would repeat on exit.
 
-        // Ground jump - resets double jumps
-        if (isGrounded)
+        if (CheckGrounded())
         {
-            jumpsRemaining = maxJumps;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
-            jumpsRemaining--;
-            lastWallDir = currentWallDir;
-          
+            jumpsRemaining = maxJumps; //fill up double jump when on ground
         }
-        // Wall jump - only when on wall and switched sides
-        else if (jumpsRemaining == 0 && CheckIsWalled() && currentWallDir != 0 && currentWallDir != lastWallDir)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
-            lastWallDir = currentWallDir;
 
-        }
-        else if (jumpsRemaining > 0 && CheckIsWalled() && currentWallDir != 0 && currentWallDir != lastWallDir)
+        if (jumpsRemaining != 0 && CheckIsWalled() && currentWallDir != 0 && currentWallDir != lastWallDir)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
-            jumpsRemaining--;
             lastWallDir = currentWallDir;
         }
-        // Double jump - if in air jump (doesn't affect wall jump)
-        else if (jumpsRemaining > 0)
+
+        else if (jumpsRemaining > 0 && !CheckIsWalled()) //double jump
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             jumpsRemaining--;
@@ -113,16 +102,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void CheckGrounded() 
+    private bool CheckGrounded() 
     {
-        if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
-        {
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
+        return Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer);
+
     }
 
     private bool CheckIsWalled()
@@ -146,14 +129,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void DoWallSlide()
     {
-        if (!isGrounded && CheckIsWalled())
+        if (!CheckGrounded() && CheckIsWalled())
         {
             currentWallDir = transform.localScale.x; //while on the wall, get if it's on left or right from player
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -wallSlideSpeed));
         }
         else
         {
-            currentWallDir = 0; //not on wall
+            currentWallDir = 0; //on ground value should be 0 otherwise first wall jump may not work if value was 1,-1
         }
     }
 
