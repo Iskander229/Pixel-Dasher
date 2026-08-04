@@ -6,18 +6,22 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 3;
+    public int damageFromStomp = 1;
     private int currentHealth;
 
     public UI_Health healthUI; //get health container script which is UI for health
 
-    private SpriteRenderer SpriteRenderer;
+    private SpriteRenderer spriteRenderer; //to change color if needed
+    private Color ogColor;
+
 
     void Start()
     {
         currentHealth = maxHealth;
         healthUI.SetMaxHearts(maxHealth); // set UI health max too
 
-        SpriteRenderer = GetComponent<SpriteRenderer>(); // GET PLAYERS RENDERER TO CHANGE ITS COLOR WHEN GETTING DAMAGE
+        spriteRenderer = GetComponent<SpriteRenderer>(); // GET PLAYERS RENDERER TO CHANGE ITS COLOR WHEN GETTING DAMAGE
+        ogColor = spriteRenderer.color;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -27,6 +31,7 @@ public class PlayerHealth : MonoBehaviour
         {
             if (IsPlayerAboveEnemy(enemy))
             {
+                enemy.TakeDamage(damageFromStomp); // damage to Enemy now
                 return; // Don't take damage, player is stomping the enemy
             }
 
@@ -69,8 +74,8 @@ public class PlayerHealth : MonoBehaviour
 
     private IEnumerator FlashRed()
     {
-        SpriteRenderer.color = Color.red;
+        spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.2f);
-        SpriteRenderer.color = Color.green;
+        spriteRenderer.color = ogColor;
     }
 }

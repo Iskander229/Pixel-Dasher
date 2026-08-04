@@ -1,9 +1,16 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public int maxhealth = 2;
+    private int currentHealth;
+    public int damage = 1;
+
+    private SpriteRenderer spriteRenderer; //to make enemy flash white/red when hit
+    private Color ogColor;
+
     public Transform player;
-    public int damage = 1; //integer of hearts
     public float chaseSpeed = 2f;
     public float jumpForce = 2f;
     public LayerMask groundLayer;
@@ -15,6 +22,10 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        currentHealth = maxhealth;
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        ogColor = spriteRenderer.color;
 
     }
 
@@ -67,5 +78,29 @@ public class EnemyController : MonoBehaviour
 
             rb.AddForce(new Vector2(jumpDirection.x, jumpForce), ForceMode2D.Impulse);
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        //flash white 
+        StartCoroutine(FlashWhite());
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+    }
+
+    private IEnumerator FlashWhite()
+    {
+        spriteRenderer.color = Color.white;
+        yield return new WaitForSeconds(0.2f);
+        spriteRenderer.color = ogColor;
     }
 }
