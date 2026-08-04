@@ -13,7 +13,7 @@ public class HoldToLoadNextLevel : MonoBehaviour
 
     public static event Action OnHoldComplete;
 
-    // Update is called once per frame
+
     void Update()
     {
         if (isHolding)

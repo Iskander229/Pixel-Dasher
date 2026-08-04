@@ -1,7 +1,9 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -10,12 +12,20 @@ public class GameController : MonoBehaviour
 
     public GameObject player;
     public GameObject LoadCanvas;
-    public List<GameObject> levels;
-    private int currentLevelIndex = 0;
+    
+    private static int currentLevelIndex = 0;
+    private int nextLevelIndex = 0;
+    private static int totalScenes;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+        
+    }
 
     void Start()
     {
+        totalScenes = SceneManager.sceneCountInBuildSettings; ;
         progressAmount = 0;
         progressSlider.value = 0;
         Gem.OnGemCollect += IncreaseProgressAmount;
@@ -26,7 +36,9 @@ public class GameController : MonoBehaviour
 
     void IncreaseProgressAmount(int amount)
     {
+
         progressAmount += amount;
+        Debug.Log(progressAmount);
         progressSlider.value = progressAmount;
         if (progressAmount >= 100)
         {
@@ -38,19 +50,26 @@ public class GameController : MonoBehaviour
 
     void LoadNextLevel()
     {
-        int nextLevelIndex = (currentLevelIndex == levels.Count - 1) ? 0 : currentLevelIndex + 1;
-        //if current level is prelast, then load 1st level(0), if not - load next (+1)
-
         LoadCanvas.SetActive(false);
 
-        levels[currentLevelIndex].gameObject.SetActive(false);
-        levels[nextLevelIndex].gameObject.SetActive(true);
+        nextLevelIndex = currentLevelIndex + 1;
+        
+        if(nextLevelIndex < totalScenes)
+        {
+            nextLevelIndex = 0;
+        }
+
+        SceneManager.LoadScene(nextLevelIndex);
 
         player.transform.position = new Vector3(0, 0, 0); //default starting pos
 
         currentLevelIndex = nextLevelIndex;
+
+        //reset progress 
         progressAmount = 0;
         progressSlider.value = 0;
+        progressSlider.minValue = 0;
+        progressSlider.maxValue = 100;
 
     }
 }

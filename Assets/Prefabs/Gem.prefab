@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
-  m_Color: {r: 0.7781025, g: 0.62507415, b: 0.8113208, a: 1}
+  m_Color: {r: 0.8490566, g: 0.42986822, b: 0.78286904, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc3520792e192b84c91d1d34d727aaf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gem
-  worth: 20
+  worth: 25
 --- !u!58 &4334710107916463461
 CircleCollider2D:
   m_ObjectHideFlags: 0

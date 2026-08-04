@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
         DoGravity();
         DoWallSlide();
-        Debug.Log($"Current: {currentWallDir}, Last: {lastWallDir}");
+        //Debug.Log($"Current: {currentWallDir}, Last: {lastWallDir}");
     }
 
     public void Move(InputAction.CallbackContext context)
