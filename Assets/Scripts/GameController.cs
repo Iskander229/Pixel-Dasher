@@ -1,75 +1,59 @@
-using NUnit.Framework;
-using System.Collections.Generic;
-using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    int progressAmount;
-    public Slider progressSlider;
+    private const int FirstGameplaySceneIndex = 1;
 
+    private int progressAmount;
+
+    public Slider progressSlider;
     public GameObject player;
     public GameObject LoadCanvas;
-    
-    private static int currentLevelIndex = 0;
-    private int nextLevelIndex = 0;
-    private static int totalScenes;
 
-    private void Awake()
+    private void OnEnable()
     {
-        DontDestroyOnLoad(gameObject);
-        
+        Gem.OnGemCollect += IncreaseProgressAmount;
+        HoldToLoadNextLevel.OnHoldComplete += LoadNextLevel;
     }
 
-    void Start()
+    private void OnDisable()
     {
-        totalScenes = SceneManager.sceneCountInBuildSettings; ;
+        Gem.OnGemCollect -= IncreaseProgressAmount;
+        HoldToLoadNextLevel.OnHoldComplete -= LoadNextLevel;
+    }
+
+    private void Start()
+    {
         progressAmount = 0;
         progressSlider.value = 0;
-        Gem.OnGemCollect += IncreaseProgressAmount;
-
-        HoldToLoadNextLevel.OnHoldComplete += LoadNextLevel;
         LoadCanvas.SetActive(false);
     }
 
-    void IncreaseProgressAmount(int amount)
+    private void IncreaseProgressAmount(int amount)
     {
-
         progressAmount += amount;
         Debug.Log(progressAmount);
         progressSlider.value = progressAmount;
+
         if (progressAmount >= 100)
         {
-            //level complete!
             LoadCanvas.SetActive(true);
             Debug.Log("level complete!");
         }
     }
 
-    void LoadNextLevel()
+    private void LoadNextLevel()
     {
         LoadCanvas.SetActive(false);
 
-        nextLevelIndex = currentLevelIndex + 1;
-        
-        if(nextLevelIndex < totalScenes)
+        int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextLevelIndex >= SceneManager.sceneCountInBuildSettings)
         {
-            nextLevelIndex = 0;
+            nextLevelIndex = FirstGameplaySceneIndex;
         }
 
         SceneManager.LoadScene(nextLevelIndex);
-
-        player.transform.position = new Vector3(0, 0, 0); //default starting pos
-
-        currentLevelIndex = nextLevelIndex;
-
-        //reset progress 
-        progressAmount = 0;
-        progressSlider.value = 0;
-        progressSlider.minValue = 0;
-        progressSlider.maxValue = 100;
-
     }
 }

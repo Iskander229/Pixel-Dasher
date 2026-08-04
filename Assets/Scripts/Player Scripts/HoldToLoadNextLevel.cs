@@ -24,7 +24,7 @@ public class HoldToLoadNextLevel : MonoBehaviour
             if(holdTimer >= holdDuration )
             {
                 //LOAD NEXT LEVEL
-                OnHoldComplete.Invoke();
+                OnHoldComplete?.Invoke();
                 ResetHold();
             }
         }
