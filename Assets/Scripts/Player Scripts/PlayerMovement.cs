@@ -1,4 +1,4 @@
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -112,7 +112,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void JumpTrail()
     {
-        animator.SetTrigger("jump");
+        //animator.SetTrigger("jump"); for later when  we have jump animation and etc
+
         TrailParticles.Play();
     }
 
