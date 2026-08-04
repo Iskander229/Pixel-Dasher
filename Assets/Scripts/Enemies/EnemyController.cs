@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public Transform player;
+    public int damage = 1; //integer of hearts
     public float chaseSpeed = 2f;
     public float jumpForce = 2f;
     public LayerMask groundLayer;

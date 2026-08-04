@@ -10,7 +10,7 @@ public class Gem : MonoBehaviour, IItem
     {
         Debug.Log("GEM COLLECTED !");
         OnGemCollect?.Invoke(worth); //sets up an event that other scripts can subscsribe to
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
 }
