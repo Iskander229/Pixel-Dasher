@@ -44,6 +44,8 @@ public class UI_Health : MonoBehaviour
                 hearts[i].color = Color.white;
             }
         }
+        //Debug.Log($"UI hearts updated, current: {currentHealth}");
     }
+
 
 }

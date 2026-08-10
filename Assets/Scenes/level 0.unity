@@ -1856,6 +1856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   maxHealth: 3
+  damageFromStomp: 1
   healthUI: {fileID: 621456694}
 --- !u!1 &448067012
 GameObject:
@@ -2948,6 +2949,18 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 335590802}
+    - target: {fileID: 9145013403879930142, guid: 4dfd4c51c50b7ef4eaceea9837b8aa77, type: 3}
+      propertyPath: lootTable.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9145013403879930142, guid: 4dfd4c51c50b7ef4eaceea9837b8aa77, type: 3}
+      propertyPath: lootTable.Array.data[0].ItemPrefab
+      value: 
+      objectReference: {fileID: 7227708363107121156, guid: 207951df5494ca2459ba7a81c0c6f35e, type: 3}
+    - target: {fileID: 9145013403879930142, guid: 4dfd4c51c50b7ef4eaceea9837b8aa77, type: 3}
+      propertyPath: lootTable.Array.data[0].dropChance
+      value: 70.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -13,7 +13,7 @@ public class PlayerHealth : MonoBehaviour
 
     private SpriteRenderer spriteRenderer; //to change color if needed
     private Color ogColor;
-
+    
 
     void Start()
     {
@@ -22,6 +22,8 @@ public class PlayerHealth : MonoBehaviour
 
         spriteRenderer = GetComponent<SpriteRenderer>(); // GET PLAYERS RENDERER TO CHANGE ITS COLOR WHEN GETTING DAMAGE
         ogColor = spriteRenderer.color;
+
+        HealthItem.OnHealthCollect += Heal; //subscribe to healthItem pickable item to heal when its collected.
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -37,6 +39,17 @@ public class PlayerHealth : MonoBehaviour
 
             TakeDamage(enemy.damage);
         }
+    }
+
+    void Heal(int amount)
+    {
+        currentHealth += amount;
+        if(currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        Debug.Log($"Player Healed, HP: {currentHealth}");
+        healthUI.UpdateHearts(currentHealth);
     }
 
     //Check if player is above the enemy
@@ -68,7 +81,7 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Player hit! Health: {currentHealth}");
+            Debug.Log($"Player HIT! Health: {currentHealth}");
         }
     }
 

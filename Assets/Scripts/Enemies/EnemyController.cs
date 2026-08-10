@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -18,6 +20,10 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool shouldJump;
+
+    //LootTable 
+    [Header("Loot")]
+    public List<LootItem> lootTable = new List<LootItem>();
 
     void Start()
     {
@@ -92,15 +98,42 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void Die()
-    {
-        Destroy(gameObject);
-    }
-
     private IEnumerator FlashWhite()
     {
         spriteRenderer.color = Color.white;
         yield return new WaitForSeconds(0.2f);
         spriteRenderer.color = ogColor;
+    }
+
+    void Die()
+    {
+        Debug.Log("Enemy died");
+        //Go around loottable
+        //spawn item
+        foreach(LootItem lootItem in lootTable)
+        {
+            if(Random.Range(0f,100f) <= lootItem.dropChance)
+            {
+                InstantiateLoot(lootItem.ItemPrefab); //instantiate dropped loot
+                Debug.Log($"Enemy dropped: {lootItem.ItemPrefab.name} - item" );
+            }
+            else
+            {
+                Debug.Log("Enemy dropped No Items");
+            }
+            break; //to drop only one item
+            
+        }
+        Destroy(gameObject);
+    }
+
+    void InstantiateLoot(GameObject loot)
+    {
+        if (loot) //when loot drops make instantiate it and make it red.
+        {
+            GameObject droppedLoot = Instantiate(loot, transform.position, Quaternion.identity);
+
+            droppedLoot.GetComponent<SpriteRenderer>().color = Color.red; 
+        }
     }
 }

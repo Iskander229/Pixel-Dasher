@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
     private void IncreaseProgressAmount(int amount)
     {
         progressAmount += amount;
-        Debug.Log(progressAmount);
+        Debug.Log($"Gem collected! progress: {progressAmount}");
         progressSlider.value = progressAmount;
 
         if (progressAmount >= 100)
