@@ -25,6 +25,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "HoldToLoadNextLevel",
+                    "type": "Button",
+                    "id": "0f8b7d28-d200-4551-bbde-3ec71b5dd476",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Attack",
                     "type": "Button",
                     "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
@@ -88,9 +97,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "HoldToLoadNextLevel",
+                    "name": "Dash",
                     "type": "Button",
-                    "id": "0f8b7d28-d200-4551-bbde-3ec71b5dd476",
+                    "id": "1c2895ee-06be-47d2-8f67-cbe1476ce3cd",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -491,6 +500,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "HoldToLoadNextLevel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "255d9011-216d-4de3-aee1-99a5ac98b27f",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

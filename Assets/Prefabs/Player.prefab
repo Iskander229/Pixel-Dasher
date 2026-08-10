@@ -5166,6 +5166,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0f8b7d28-d200-4551-bbde-3ec71b5dd476
+    m_ActionName: 'Player/HoldToLoadNextLevel[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1c2895ee-06be-47d2-8f67-cbe1476ce3cd
+    m_ActionName: 'Player/Dash[/Keyboard/q]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -5187,6 +5195,9 @@ MonoBehaviour:
   animator: {fileID: 8870763527021505605}
   TrailParticles: {fileID: 5412275576773097383}
   moveSpeed: 5
+  dashSpeed: 20
+  dashDuration: 0.25
+  dashCooldown: 0.1
   jumpPower: 8
   maxJumps: 2
   baseGravity: 2

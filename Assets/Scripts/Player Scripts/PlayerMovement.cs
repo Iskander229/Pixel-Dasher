@@ -1,6 +1,9 @@
 
+using JetBrains.Annotations;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,6 +16,14 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 5f;
     float horizontalMovement;
+
+    [Header("Dashing")]
+    public float dashSpeed = 28f;
+    public float dashDuration = 0.1f;
+    public float dashCooldown = 0.1f;
+    bool isDashing;
+    bool canDash = true;
+    TrailRenderer trailRenderer;
 
     [Header("Jumping")]
     public float jumpPower = 8f;
@@ -35,11 +46,11 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayer; //to check if touching anything tagged as "ground"
     bool isGrounded;
 
-
     [Header("WallCheck")]
     public Transform wallCheckPos;
     public Vector2 wallCheckSize = new Vector2(0.1f, 0.5f);
     public LayerMask wallLayer;
+
 
     private void OnDrawGizmosSelected() //when selecting script owner, this method draws a debug
     {
@@ -53,10 +64,16 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         FlipPlayer(); //when starting player always faces right (if default of "isFacingRight" is true
+        trailRenderer = GetComponent<TrailRenderer>();
     }
 
     void Update()
     {
+        if (isDashing) //when dashing can't move or do anything
+        {
+            return;
+        }
+        
         rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
         DoGravity();
         DoWallSlide();
@@ -67,6 +84,37 @@ public class PlayerMovement : MonoBehaviour
     {
         FlipPlayer(); //when applying movement (left or right) make player face that direction...
         horizontalMovement = context.ReadValue<Vector2>().x; //movement on horizontal(x) axis
+    }
+
+    public void Dash(InputAction.CallbackContext context)
+    {
+        if (context.performed && canDash)
+        {
+            StartCoroutine(DashCoroutine());
+        }
+    }
+
+    private IEnumerator DashCoroutine()
+    {
+        Physics2D.IgnoreLayerCollision(8, 9, true); //ignore collision between player(9) and enemy(8) layers when starting the dashing.
+        canDash = false;
+        isDashing = true;
+
+        trailRenderer.emitting = true;
+        float dashDir = isFacingRight ? 1f : -1f; //if facing right, dash direction is also to right.
+
+        rb.linearVelocity = new Vector2(dashDir * dashSpeed, rb.linearVelocity.y); //dashing
+
+        yield return new WaitForSeconds(dashDuration);
+
+        rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y); //Reset horizontal velocity
+
+        isDashing = false;
+        trailRenderer.emitting = false;
+        Physics2D.IgnoreLayerCollision(8, 9, false);
+
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
     }
 
     private void FlipPlayer() //make player face direction of movement
