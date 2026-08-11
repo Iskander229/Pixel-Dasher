@@ -11,11 +11,10 @@ public class TrapScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            
             HandlePlayerBounce(collision.gameObject);
-
         }
     }
+
 
     private void Start()
     {
@@ -25,18 +24,16 @@ public class TrapScript : MonoBehaviour
     private void HandlePlayerBounce(GameObject player)
     {
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
-        if (rb)
-        {
             // Remove the player's existing velocity
             // in the direction the trap will bounce them.
+            rb.linearVelocity = new Vector2 (0, 0);
             float velocityInBounceDirection = Vector2.Dot(rb.linearVelocity, bounceDirection);
 
-            rb.linearVelocity -= bounceDirection * velocityInBounceDirection;
+            rb.linearVelocity = bounceDirection * velocityInBounceDirection;
 
             // Apply bounce force in the trap's facing direction
             rb.AddForce(bounceDirection * bounceForce, ForceMode2D.Impulse);
             Debug.Log("Bounce direction: " + bounceDirection);
-        }
     }
 
     private void OnDrawGizmos()

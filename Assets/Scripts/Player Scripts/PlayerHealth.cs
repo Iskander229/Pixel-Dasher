@@ -67,7 +67,7 @@ public class PlayerHealth : MonoBehaviour
 
         // Check if player is above the enemy (player's y is higher than enemy's y)
         // Adjust the threshold based on your game
-        float threshold = 0.5f;
+        float threshold = 0.4f;
         return playerPos.y > enemyPos.y + threshold;
     }
 

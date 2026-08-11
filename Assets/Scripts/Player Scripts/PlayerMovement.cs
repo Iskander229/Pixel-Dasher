@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public float moveSpeed = 5f;
-    float horizontalMovement;
+    float moveDir;
 
     [Header("Dashing")]
     public float dashSpeed = 28f;
@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         
-        rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(moveDir * moveSpeed, rb.linearVelocity.y);
         DoGravity();
         DoWallSlide();
         //Debug.Log($"Current: {currentWallDir}, Last: {lastWallDir}");
@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         FlipPlayer(); //when applying movement (left or right) make player face that direction...
-        horizontalMovement = context.ReadValue<Vector2>().x; //movement on horizontal(x) axis
+        moveDir = context.ReadValue<Vector2>().x; //movement on horizontal(x) axis
     }
 
     public void Dash(InputAction.CallbackContext context)
@@ -119,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FlipPlayer() //make player face direction of movement
     {
-        if (isFacingRight && horizontalMovement < 0 || !isFacingRight && horizontalMovement > 0)
+        if (isFacingRight && moveDir < 0 || !isFacingRight && moveDir > 0)
         {
             isFacingRight = !isFacingRight;
             Vector3 ls = transform.localScale;
