@@ -39,6 +39,12 @@ public class PlayerHealth : MonoBehaviour
 
             TakeDamage(enemy.damage);
         }
+
+        TrapScript trap = collision.GetComponent<TrapScript>();
+        if(trap && trap.damage > 0)
+        {
+            TakeDamage(trap.damage);
+        }
     }
 
     void Heal(int amount)
