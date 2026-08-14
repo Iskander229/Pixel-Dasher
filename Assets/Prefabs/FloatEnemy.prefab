@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 8668356735982184331}
   - component: {fileID: 1878827121131119460}
   - component: {fileID: 8408843163425373740}
-  - component: {fileID: 1302949910787632111}
   - component: {fileID: -8744657430336111600}
   m_Layer: 8
-  m_Name: F_Enemy
+  m_Name: FloatEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,29 +167,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.0666667, y: 1.0666667}
   m_EdgeRadius: 0
---- !u!114 &1302949910787632111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5314618060734989311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb2ced74240806649861f13637452f45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  maxhealth: 2
-  damage: 1
-  player: {fileID: 0}
-  chaseSpeed: 2
-  jumpForce: 2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  lootTable:
-  - ItemPrefab: {fileID: 0}
-    dropChance: 0
 --- !u!114 &-8744657430336111600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,5 +179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e020bfe796d0ad48bde63a2de53d666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloatEnemy
+  maxHealth: 2
+  damage: 1
+  lootTable: []
   floatSpeed: 2
   floatHeight: 0.5

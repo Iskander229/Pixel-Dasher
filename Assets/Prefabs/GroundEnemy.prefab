@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 8596082524912406915}
   - component: {fileID: 7840371280107430524}
   - component: {fileID: 991093954734595649}
-  - component: {fileID: 9145013403879930142}
   m_Layer: 8
-  m_Name: Enemy
+  m_Name: GroundEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,26 +166,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.86651707, y: 0.7521461}
   m_EdgeRadius: 0
---- !u!114 &9145013403879930142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214026042847878420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb2ced74240806649861f13637452f45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  maxhealth: 2
-  damage: 1
-  player: {fileID: 0}
-  chaseSpeed: 2
-  jumpForce: 2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  lootTable:
-  - ItemPrefab: {fileID: 7227708363107121156, guid: 207951df5494ca2459ba7a81c0c6f35e, type: 3}
-    dropChance: 50
