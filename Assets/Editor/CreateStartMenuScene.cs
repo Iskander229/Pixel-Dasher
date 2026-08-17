@@ -84,6 +84,7 @@ public static class CreateStartMenuScene
             .ToArray();
 
         AssetDatabase.SaveAssets();
+        ApplyPixelMenuTheme.ApplyAll();
         Debug.Log("Pixel Dasher start menu created and added as the first build scene.");
     }
 

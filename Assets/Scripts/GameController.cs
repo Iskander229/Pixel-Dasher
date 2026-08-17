@@ -4,8 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    private const int FirstGameplaySceneIndex = 1;
-
     private int progressAmount;
 
     public Slider progressSlider;
@@ -47,13 +45,7 @@ public class GameController : MonoBehaviour
     private void LoadNextLevel()
     {
         LoadCanvas.SetActive(false);
-
-        int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        if (nextLevelIndex >= SceneManager.sceneCountInBuildSettings)
-        {
-            nextLevelIndex = FirstGameplaySceneIndex;
-        }
-
-        SceneManager.LoadScene(nextLevelIndex);
+        WorldMapProgress.CompleteCurrentLevel(progressAmount);
+        SceneManager.LoadScene("World Map");
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     private const string MenuSceneName = "Start Menu";
+    private const string WorldMapSceneName = "World Map";
     private const string PrefabResourceName = "Pause Menu";
 
     private static PauseMenu instance;
@@ -28,7 +29,7 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        if (scene.name == MenuSceneName)
+        if (scene.name == MenuSceneName || scene.name == WorldMapSceneName)
         {
             if (instance != null)
             {
@@ -89,10 +90,15 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void ReturnToMainMenu()
+    public void ReturnToWorldMap()
     {
         SetPaused(false);
-        SceneManager.LoadScene(MenuSceneName);
+        SceneManager.LoadScene(WorldMapSceneName);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        ReturnToWorldMap();
     }
 
     public void QuitGame()

@@ -53,12 +53,12 @@ public static class CreatePauseMenuPrefab
 
         Button resume = CreateButton("Resume Button", panel.transform, "RESUME", new Vector2(0f, 125f));
         Button restart = CreateButton("Restart Button", panel.transform, "RESTART LEVEL", new Vector2(0f, 5f));
-        Button mainMenu = CreateButton("Main Menu Button", panel.transform, "MAIN MENU", new Vector2(0f, -115f));
+        Button mainMenu = CreateButton("Main Menu Button", panel.transform, "WORLD MAP", new Vector2(0f, -115f));
         Button quit = CreateButton("Quit Button", panel.transform, "QUIT GAME", new Vector2(0f, -235f));
 
         UnityEventTools.AddPersistentListener(resume.onClick, controller.Resume);
         UnityEventTools.AddPersistentListener(restart.onClick, controller.RestartLevel);
-        UnityEventTools.AddPersistentListener(mainMenu.onClick, controller.ReturnToMainMenu);
+        UnityEventTools.AddPersistentListener(mainMenu.onClick, controller.ReturnToWorldMap);
         UnityEventTools.AddPersistentListener(quit.onClick, controller.QuitGame);
 
         Text hint = CreateText("Hint", panel.transform, "ESC / START TO RESUME", 21, FontStyle.Normal, new Color32(125, 142, 166, 255));
@@ -73,6 +73,7 @@ public static class CreatePauseMenuPrefab
         PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
         Object.DestroyImmediate(root);
         AssetDatabase.SaveAssets();
+        ApplyPixelMenuTheme.ApplyAll();
         Debug.Log("Editable Pause Menu prefab created at " + PrefabPath);
     }
 
